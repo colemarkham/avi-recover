@@ -44,6 +44,10 @@ public class RIFFParser{
    }
 
    public static void main(String[] args) throws IOException{
+      if(args.length == 0 || args.length != 1 || args.length != 3){
+         usage();
+         return;
+      }
       FileInputStream inputStream = new FileInputStream(args[0]);
       try{
          FileChannel inChannel = inputStream.getChannel();
@@ -87,6 +91,12 @@ public class RIFFParser{
          inputStream.close();
       }
 
+   }
+
+   private static void usage(){
+      System.out.println("Usage: java -jar avi_recover.jar <input file> [<offset> <output file>]");
+      System.out.println("\tIf <offset> and <output file> are specified, a single video is read starting at the given offset and written to the given file.");
+      System.out.println("\tOtherwise, the entire input file is scanned and all videos are extracted to the current directory with the format extracted_video#.avi");
    }
 
    public static FilePart parse(FileChannel channel) throws Exception{
